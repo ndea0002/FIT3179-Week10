@@ -1,0 +1,61 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Total fatalaties in each country",
+  "width": 800,
+  "height": 500,
+  "data": {
+  "url": "https://raw.githubusercontent.com/ndea0002/FIT3179-Week10/main/Data/totalfatalbyyear.csv"
+},
+"mark": {
+    "type": "circle",
+    "opacity": 0.8,
+    "stroke": "black",
+    "strokeWidth": 1
+  },
+  "transform": [
+      {
+        "calculate": "toNumber(datum.suicides_no)",
+        "as": "suicides"
+      },
+      {
+        "calculate": "toNumber(datum.year)",
+        "as": "year_2"
+      }
+  ],
+"selection": {
+  "age_highlight": {
+"type": "multi",
+"fields": ["age"],
+"bind": "legend"
+  }
+},  
+"encoding": {
+  "x": {
+    "field": "year_2",
+    "type": "quantitative",
+    "title":"Year",
+    "scale": {"type": "log", "domain": [1984, 2018]}
+  },
+  "y": {
+    "field": "suicides",
+    "type": "quantitative"
+  },
+"color": {
+"field": "age",
+"type": "nominal"
+},
+"size": {
+"field": "suicides",
+"type": "quantitative"
+},
+"opacity": {
+"condition": {"selection": "age_highlight", "value": 0.8},
+"value": 0.1
+},
+"tooltip": [
+{"field": "year", "type": "nominal", "title": "Year"},
+{"field": "age",   "title" : "Age group"},
+{"field": "suicides", "type": "quantitative", "format": ","}
+]
+}   
+}
